@@ -15,7 +15,7 @@ public class Application {
 
         server.setHandler(handler);
         handler.addServlet(new ServletHolder(new UserServlet(te)), "/users");
-        handler.addServlet(new ServletHolder(new ChatServlet(te)), "/messages");
+        handler.addServlet(new ServletHolder(new ChatServlet(te)), "/messages/*");
 
         handler.addServlet(new ServletHolder(new StaticContentServlet("css")), "/css/*");
 

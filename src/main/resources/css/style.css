@@ -246,6 +246,7 @@ input:focus{
 }
 
 .chat-main{
+
   width: 500px;
 }
 .header-one{
@@ -292,6 +293,11 @@ input:focus{
 }
 .options-left i:hover, .options-right i:hover{
   color: #000;
+}
+
+.chat-content {
+height: 600px;
+overflow: auto;
 }
 .chats{
 
