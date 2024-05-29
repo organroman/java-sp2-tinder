@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Liked Users">
     <meta name="author" content="Your Name">
-    <link rel="icon" href="/static/img/favicon.ico">
+    <link rel="icon" href="/css/img/favicon.ico">
 
     <title>Liked Users</title>
     <!-- Bootstrap core CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->
-    <link rel="stylesheet" href="/static/style.liked-list.css">
+    <link rel="stylesheet" href="/css/style.liked-list.css">
 </head>
 <body>
 <div class="container">

@@ -1,4 +1,4 @@
-package web.filters;
+package filters;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -21,10 +21,8 @@ public interface HttpFilter extends Filter {
 
     @Override
     default void doFilter(ServletRequest rq0, ServletResponse rs0, FilterChain chain) throws IOException, ServletException {
-        // not mine
         if (!isHttp(rq0, rs0)) chain.doFilter(rq0, rs0);
         else {
-            // mine
             HttpServletRequest rq = (HttpServletRequest) rq0;
             HttpServletResponse rs = (HttpServletResponse) rs0;
 

@@ -21,7 +21,7 @@
     </tbody>
 </table>
 
-<form method="post">
+<form action="/action" method="post">
     <button>No</button>
     <input type="text" name = "x"  value=${id}>
     <button><b>Yes!</b></button>
