@@ -7,8 +7,8 @@ public class User {
     public int id;
     public String name;
     public String imgUrl;
-    private String login;
-    private String password;
+    private  String login ;
+    private  String password;
 
 
     public User(int id, String name, String imgUrl) {
@@ -18,7 +18,6 @@ public class User {
     }
 
     public User(String name, String imgUrl) {
-
         this.name = name;
         this.imgUrl = imgUrl;
     }

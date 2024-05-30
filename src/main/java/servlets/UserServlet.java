@@ -55,6 +55,7 @@ public class UserServlet extends HttpServlet {
                 else resp.sendRedirect("/liked");
                 HashMap<String, Object> map = getItems2();
                 te.render("like-page.html", map, out);
+
             }
         } else resp.setStatus(HttpServletResponse.SC_PRECONDITION_FAILED);
     }
@@ -67,4 +68,5 @@ public class UserServlet extends HttpServlet {
         map.put("id", items2.get(i).getId());
         return map;
     }
+
 }
