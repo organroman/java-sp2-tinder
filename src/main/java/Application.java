@@ -22,6 +22,8 @@ public class Application {
         handler.addServlet(new ServletHolder(new LoginServlet(te)), "/login");
         handler.addServlet(new ServletHolder(new StaticContentServlet("css")), "/css/*");
 
+        handler.addServlet(new ServletHolder(new TestServlet(te)), "/users2"); // to delete
+
         EnumSet<DispatcherType> dt = EnumSet.of(DispatcherType.REQUEST);
 
         handler.addFilter(CookieFilter.class, "/users", dt);

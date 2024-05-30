@@ -7,8 +7,8 @@ public class User {
     public int id;
     public String name;
     public String imgUrl;
-    private  String login ;
-    private  String password;
+    private String login;
+    private String password;
 
 
     public User(int id, String name, String imgUrl) {
@@ -16,7 +16,15 @@ public class User {
         this.name = name;
         this.imgUrl = imgUrl;
     }
-    public User(String login, String password ,int id) {
+
+    public User(String name, String imgUrl) {
+
+        this.name = name;
+        this.imgUrl = imgUrl;
+    }
+
+
+    public User(String login, String password, int id) {
         this.id = id;
         this.login = login;
         this.password = password;
@@ -52,5 +60,14 @@ public class User {
 
     public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "imgUrl='" + imgUrl + '\'' +
+                ", name='" + name + '\'' +
+                ", id=" + id +
+                '}';
     }
 }
