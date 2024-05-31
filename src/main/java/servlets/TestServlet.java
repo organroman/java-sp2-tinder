@@ -1,6 +1,6 @@
 package servlets;
 
-import dao.UserService;
+import dao.UsersDAO;
 import models.User;
 
 import javax.servlet.ServletException;
@@ -13,10 +13,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class UserServlet extends HttpServlet {
+public class TestServlet extends HttpServlet {
     private final TemplateEngine te;
 
-    public UserServlet(TemplateEngine te) {
+    public TestServlet(TemplateEngine te) {
         this.te = te;
     }
 
@@ -25,7 +25,7 @@ public class UserServlet extends HttpServlet {
 
     {
         try {
-            items2 = new UserService().selectAll();
+            items2 = new UsersDAO().select();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -38,6 +38,51 @@ public class UserServlet extends HttpServlet {
             te.render("like-page.html", map, out);
         }
     }
+
+    // delete
+
+//    @Override
+//    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        UsersDAO dao = new UsersDAO();
+//        try {
+//            System.out.println("delete");
+//            dao.delete(dao.selectById(2));
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
+
+//    }
+
+//    INSERT
+
+//    @Override
+//    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        UsersDAO dao = new UsersDAO();
+//        try {
+//            System.out.println("insert");
+//            dao.insert(new User("AAAAAAAA","https://www.industrial-auctions.com/static/img/logo.5fdcb94d880f.png"));
+//            System.out.println("__________");
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
+//
+//    }
+
+    // UPDATE
+
+//    @Override
+//    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        UsersDAO dao = new UsersDAO();
+//        try {
+//            System.out.println("insert");
+//            dao.update(new User(4,"BBBB","https://www.industrial-auctions.com/static/img/logo.5fdcb94d880f.png"));
+//            System.out.println("__________");
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
+//
+//    }
+
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -55,10 +100,10 @@ public class UserServlet extends HttpServlet {
                 else resp.sendRedirect("/liked");
                 HashMap<String, Object> map = getItems2();
                 te.render("like-page.html", map, out);
-
             }
         } else resp.setStatus(HttpServletResponse.SC_PRECONDITION_FAILED);
     }
+
 
     public HashMap<String, Object> getItems2() {
         HashMap<String, Object> map = new HashMap<>();
@@ -68,5 +113,4 @@ public class UserServlet extends HttpServlet {
         map.put("id", items2.get(i).getId());
         return map;
     }
-
 }
