@@ -1,5 +1,6 @@
-package dao;
+package service;
 
+import dao.AuthDAO;
 import models.User;
 
 import java.sql.SQLException;

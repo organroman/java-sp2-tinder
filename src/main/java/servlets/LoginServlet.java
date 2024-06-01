@@ -2,6 +2,7 @@ package servlets;
 
 import dao.*;
 import models.User;
+import service.AuthService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

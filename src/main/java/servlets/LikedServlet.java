@@ -1,7 +1,5 @@
 package servlets;
 
-import dao.AuthDAO;
-import dao.AuthService;
 import models.User;
 
 import javax.servlet.ServletException;

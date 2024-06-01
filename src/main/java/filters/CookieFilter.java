@@ -1,5 +1,5 @@
 package filters;
-import dao.AuthService;
+import service.AuthService;
 import servlets.Auth;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
