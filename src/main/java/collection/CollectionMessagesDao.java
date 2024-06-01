@@ -34,13 +34,24 @@ public class CollectionMessagesDao implements MessageDao {
             where (chat_owner_id=? and receiver_id=?)
                or (chat_owner_id=? and receiver_id=?);
             """;
+    private final String INSERT_MESSAGE = """
+            insert into messages (chat_owner_id, receiver_id, content, date)
+            values (?, ?, ?, ?);
+            """;
     //TODO: DELETE COMMENTED CODE
 //    public CollectionMessagesDao(List<Message> messages) {
 //        this.messages = messages;
 //    }
     @Override
-    public void insert(Message obj) throws SQLException {
-//todo: insert new message
+    public void insert(Message message) throws SQLException {
+    try (Connection connector = Conn.mcConn()) {
+        PreparedStatement ps = connector.prepareStatement(INSERT_MESSAGE);
+        ps.setInt(1, message.getChatOwner().getId());
+        ps.setInt(2,message.getReceiver().getId());
+        ps.setString(3, message.getContent());
+        ps.setTimestamp(4, new java.sql.Timestamp(message.getDate().getTime()));
+        ps.executeUpdate();
+    }
     }
 
     @Override

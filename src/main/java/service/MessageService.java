@@ -14,9 +14,11 @@ public class MessageService {
     }
 
     public List<Message> getMessages(int chatOwnerId, int receiverId) throws SQLException {
-      return messageDao.select(chatOwnerId, receiverId);
+        return messageDao.select(chatOwnerId, receiverId);
     }
 
-//    todo: add insert message
+    public void addMessage(Message message) throws SQLException {
+        messageDao.insert(message);
+    }
 
 }

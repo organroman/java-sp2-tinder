@@ -16,4 +16,7 @@ public class MessageController {
         return messageService.getMessages(chatOwnerId, receiverId);
     }
 
+    public void addMessage(Message message) throws  SQLException {
+        messageService.addMessage(message);
+    }
 }
