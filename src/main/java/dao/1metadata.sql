@@ -11,11 +11,12 @@ create table users
     password text
 );
 
-insert into users (name,logo) values ('MXP','https://stud-point.com/wp-content/uploads/2024/01/logo_MKHP.png', '123456');
-insert into users (name,logo) values ('Farro','https://farro.org.ua/templates/Faro_lang/images/faro-logo.png', '123456');
-insert into users (name,logo) values ('GLB','https://corp.globino.ua/wp-content/uploads/2020/05/logo.png', '123456');
-insert into users (name,logo) values ('John Doe','https://robohash.org/johndoe.png', '123456');
-insert into users (name,logo) values ('Jane Doe','https://robohash.org/janesmith.png' '123456');
+insert into users (name, logo, password) values ('MXP', 'https://stud-point.com/wp-content/uploads/2024/01/logo_MKHP.png', '123456');
+insert into users (name, logo, password) values ('Farro', 'https://farro.org.ua/templates/Faro_lang/images/faro-logo.png', '123456');
+insert into users (name, logo, password) values ('GLB', 'https://corp.globino.ua/wp-content/uploads/2020/05/logo.png', '123456');
+insert into users (name, logo, password) values ('John Doe', 'https://robohash.org/johndoe.png', '123456');
+insert into users (name, logo, password) values ('Jane Doe', 'https://robohash.org/janesmith.png', '1233456');
+
 
 create table likes
 (
