@@ -1,6 +1,8 @@
 package servlets;
 
+import dao.*;
 import models.User;
+import service.AuthService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -8,12 +10,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.*;
 
 public class LoginServlet extends HttpServlet {
     private final TemplateEngine te;
-
-    public LoginServlet(TemplateEngine te) {
+    private final UserService userService = new UserService();
+    public LoginServlet(TemplateEngine te ) {
         this.te = te;
     }
 
@@ -30,45 +33,36 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        //Dao
-        List<Map<User, UUID>> users = new ArrayList<>();
-        //Test Data
+        System.out.println("doPost method called"); // Отладочное сообщение
 
-
-        User user = new User("Test@gmail.com", "test", 1);
-        UUID userUUID = UUID.randomUUID();
-        Map<User, UUID> userMap = new HashMap<>();
-        userMap.put(user , userUUID);
-
-        // Добавляем HashMap в коллекцию users
-        users.add(userMap);
-        String login = req.getParameter("inputEmail");
+        String name = req.getParameter("inputName");
         String password = req.getParameter("inputPassword");
 
-        // Метод поиска по логину и паролю, возвращает Optional<User>
-        Optional<User> foundUser = users.stream()
-                .flatMap(map -> map.keySet().stream())
-                .filter(u -> u.getLogin().equals(login) && u.getPassword().equals(password))
-                .findFirst();
+        System.out.println("Received name: " + name); // Отладочное сообщение
+        System.out.println("Received password: " + password); // Отладочное сообщение
 
-        // Проверка результата
-        if (foundUser.isPresent()) {
-            Auth.setCookieValue(
-                    resp,
-                    UUID.randomUUID().toString());
+        try {
+            Optional<User> userOptional = Auth.getUserByNameAndPassword(name, password);
+
+            if (userOptional.isPresent()) {
+                User user = userOptional.get();
+                System.out.println("User found: " + user.getName()); // Отладочное сообщение
+
+                String userUUID = UUID.randomUUID().toString();
+                AuthService.update(userUUID, user);
+
+                System.out.println(AuthService.select().toString());
+                Auth.setCookieValue(resp, userUUID);
+                resp.sendRedirect("/users");
+            } else {
+                System.out.println("User not found, redirect to login"); // Отладочное сообщение
+
+                resp.sendRedirect("/login");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Обработка ошибки
         }
-        else {
-            User user1 = new User(login , password , 2);
-            UUID userUUID1 = UUID.randomUUID();
-            Map<User, UUID> userMapTest = new HashMap<>();
-            userMapTest.put(user , userUUID);
-            users.add(userMapTest);
-            Auth.setCookieValue(
-                    resp,
-                    UUID.randomUUID().toString());
-        }
-
-
-        resp.sendRedirect("/users");
     }
 }
+
