@@ -1,13 +1,13 @@
 package models;
 
 
+import java.util.Objects;
 import java.util.UUID;
 
 public class User {
     public int id;
     public String name;
     public String imgUrl;
-    private  String login ;
     private  String password;
 
 
@@ -21,13 +21,25 @@ public class User {
         this.name = name;
         this.imgUrl = imgUrl;
     }
-
-
-    public User(String login, String password, int id) {
-        this.id = id;
-        this.login = login;
+    public User(String name, String imgUrl , String password ) {
+        this.name = name;
+        this.imgUrl = imgUrl;
         this.password = password;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id == user.id && Objects.equals(name, user.name) && Objects.equals(password, user.password);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, password);
+    }
+
 
     public int getId() {
         return id;
@@ -39,10 +51,6 @@ public class User {
 
     public String getImgUrl() {
         return imgUrl;
-    }
-
-    public String getLogin() {
-        return login;
     }
 
     public String getPassword() {

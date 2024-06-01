@@ -30,6 +30,9 @@ public class LikedServlet extends HttpServlet {
         likedUsers.add(new User(6,"Ja3ne Smith", "https://robohash.org/janesmith.png"));
         // Добавьте больше пользователей по желанию
 
+        //System.out.println(AuthService.getUserIdByUUID(Auth.getCookieValueUnsafe(req)));
+       // System.out.println(AuthService.getUserByUUID(Auth.getCookieValueUnsafe(req)));
+
         Map<String, Object> data = new HashMap<>();
         data.put("users", likedUsers);
 

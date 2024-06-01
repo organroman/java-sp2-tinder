@@ -20,8 +20,8 @@
 <form class="form-signin" method="post" action="">
     <img class="mb-4" src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
     <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-    <label for="inputEmail" class="sr-only">Email address</label>
-    <input type="email" id="inputEmail" name="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+    <label for="inputName" class="sr-only">Your name</label>
+    <input type="Text" id="inputName" name="inputName" class="form-control" placeholder="Your name" required autofocus>
     <label for="inputPassword"  class="sr-only">Password</label>
     <input type="password" id="inputPassword" name="inputPassword" class="form-control" placeholder="Password" required>
     <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
