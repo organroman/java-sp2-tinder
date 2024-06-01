@@ -53,27 +53,25 @@
 
                     <ul class="p-0">
                         <#list messages as row>
-                        <#if row.who.id != chatPartner.id>
+                        <#if row.chatOwner.id != chatPartner.id>
                         <li class="send-msg float-right mb-2">
                             <p class="pt-1 pb-1 pl-2 pr-2 m-0 rounded">
-                                ${row.message}
+                                ${row.content}
                             </p>
                         </li>
                         <#else>
                         <li class="receive-msg float-left mb-2">
                             <div class="sender-img">
-
-                                <img src=${row.whom.imgUrl} class="float-left">
+                                <img src=${row.chatOwner.imgUrl} class="float-left">
                             </div>
                             <div class="receive-msg-desc float-left ml-2">
 
                                 <p class="bg-white m-0 pt-1 pb-1 pl-2 pr-2 rounded">
-                                    ${row.message}
+                                    ${row.content}
                                 </p>
-                                <span class="receive-msg-time">${row.whom.name} ${row.date}</span>
+                                <span class="receive-msg-time">${row.chatOwner.name} ${row.date?string("dd.MM.yyyy HH:mm")}</span>
                             </div>
                         </li>
-
 
                     </#if>
                     </#list>

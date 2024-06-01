@@ -1,5 +1,7 @@
 package dao;
 
+import models.Message;
+
 import java.sql.SQLException;
 import java.util.List;
 
@@ -11,5 +13,6 @@ public interface Dao<T> {
     void delete(T obj) throws SQLException;
 
     List<T> select() throws SQLException;
+
 
 }
