@@ -1,31 +1,45 @@
 package models;
 
-public class Message {
-    private final User who;
-    private final User whom;
-    private final String message;
-    private final String date;
+import java.util.Date;
 
-    public Message(User who, User whom, String message, String date) {
-        this.who = who;
-        this.whom = whom;
-        this.message = message;
+public class Message {
+    private final User chatOwner;
+    private final User receiver;
+    private final String content;
+    private final Date date;
+
+    public Message(User chatOwner, User receiver, String content, Date date) {
+        this.chatOwner = chatOwner;
+        this.receiver = receiver;
+        this.content = content;
         this.date = date;
     }
 
-    public User getWho() {
-        return who;
+    public User getChatOwner() {
+        return chatOwner;
     }
 
-    public User getWhom() {
-        return whom;
+    public User getReceiver() {
+        return receiver;
     }
 
-    public String getMessage() {
-        return message;
+    public String getContent() {
+        return content;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
+    }
+
+    @Override
+    public String toString() {
+        return "Message{" +
+                "chatOwnerName=" + chatOwner.getName() + " (ID: " + chatOwner.getId() + "), " +  " (LOGO: " + chatOwner.getImgUrl()  + "), "
+                +
+                "receiver=" + receiver.getName() + " (ID: " + receiver.getId() + "), " +  " (LOGO: " + receiver.getImgUrl()  + "), "
+               +
+                "content='" + content + '\'' +
+                ", date='" + date + '\'' +
+                '}';
     }
 }
