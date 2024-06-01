@@ -18,6 +18,7 @@ public class UsersDAO implements Dao<User> {
     private final static String UPDATE = "UPDATE users set name=?,logo=? WHERE user_id=?;";
     private final static String DELETE = "DELETE FROM users WHERE user_id=?;";
 
+    private final static String GET_LOGIN = "SELECT user_id, FROM users where ((name=?)and(password=?));";
 
     @Override
     public void update(User user) throws SQLException {

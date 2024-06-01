@@ -1,7 +1,10 @@
 package servlets;
 
+
 import dao.UserService;
+import models.Like;
 import models.User;
+import service.LikeService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -43,19 +46,25 @@ public class UserServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if (null != req.getParameter("x")) {
             try (PrintWriter out = resp.getWriter()) {
-                System.out.println(req.getParameter("like"));
                 if (null != req.getParameter("like")) {
-                    if (req.getParameter("like").equals("like")) {
-
-                        // do save liked profiles
-
+                    try {
+                        collect(req);
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
                     }
-                }else resp.setStatus(HttpServletResponse.SC_PRECONDITION_FAILED);
+                } else resp.setStatus(HttpServletResponse.SC_PRECONDITION_FAILED);
                 if (i != items2.size() - 1) i++;
-                else resp.sendRedirect("/liked");
+                else {
+                    i = 0;          // reset loop
+                    try {
+                        System.out.println(new LikeService().selectByLike(1));     // add parse user id
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                    resp.sendRedirect("/liked");
+                }
                 HashMap<String, Object> map = getItems2();
                 te.render("like-page.html", map, out);
-
             }
         } else resp.setStatus(HttpServletResponse.SC_PRECONDITION_FAILED);
     }
@@ -69,4 +78,15 @@ public class UserServlet extends HttpServlet {
         return map;
     }
 
+    public void collect(HttpServletRequest req) throws SQLException {
+        LikeService likeService = new LikeService();
+        int who_id = 1;
+        int whom_id = Integer.parseInt(req.getParameter("x"));
+        if (whom_id != who_id) {              // impossible likes yourself
+            int flag = likeService.selectIdByUsers(who_id, whom_id);
+            if (req.getParameter("like").equals("like")) {
+                likeService.update(new Like(flag, who_id, whom_id, "like"));
+            } else likeService.update(new Like(flag, who_id, whom_id, "dislike"));
+        }
+    }
 }
