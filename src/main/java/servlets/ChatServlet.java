@@ -4,6 +4,7 @@ import controller.MessageController;
 import dao.UserService;
 import models.Message;
 import models.User;
+import service.AuthService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -15,6 +16,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class ChatServlet extends HttpServlet {
     private final TemplateEngine te;
@@ -28,7 +30,10 @@ public class ChatServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//todo: get loggedIn user and replace it with hardcoded 1
+
+        Optional<Integer> isLoggedInUserId = AuthService.getUserIdByUUID(Auth.getCookieValueUnsafe(req));
+        int loggedInUserId = isLoggedInUserId.orElseThrow(() -> new ServletException("User is not logged in"));
+
         String pathInfo = req.getPathInfo();
         if (pathInfo == null || pathInfo.equals("/")) {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing user ID");
@@ -51,7 +56,7 @@ public class ChatServlet extends HttpServlet {
         List<Message> messages;
 
         try {
-            messages = messageController.getMessages(1, userId);
+            messages = messageController.getMessages(loggedInUserId, userId);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -79,17 +84,20 @@ public class ChatServlet extends HttpServlet {
 
         if (content == null || content.isEmpty()) {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Message is required");
+            return;
         }
 
 
         String pathInfo = req.getPathInfo();
         if (pathInfo == null || pathInfo.equals("/")) {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing user ID");
+            return;
         }
 
         String[] pathParts = pathInfo.split("/");
         if (pathParts.length < 2) {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid user ID");
+            return;
         }
 
         String userIdStr = pathParts[1];
@@ -101,17 +109,9 @@ public class ChatServlet extends HttpServlet {
             return;
         }
 
-        User chatOwner; // todo = getLoggedInUser();
-        try {
-            chatOwner = userService.selectById(1);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        Optional<User> isChatOwner = AuthService.getUserByUUID(Auth.getCookieValueUnsafe(req));
+        User loggedInUser = isChatOwner.orElseThrow(() -> new ServletException("User is not logged in"));
 
-        if (chatOwner == null) {
-            resp.sendError(HttpServletResponse.SC_UNAUTHORIZED, "User not logged in");
-            return;
-        }
 
         User receiver;
         try {
@@ -120,7 +120,7 @@ public class ChatServlet extends HttpServlet {
             throw new RuntimeException(e);
         }
 
-        Message message = new Message(chatOwner, receiver, content, new java.util.Date());
+        Message message = new Message(loggedInUser, receiver, content, new java.util.Date());
 
         try {
             messageController.addMessage(message);
