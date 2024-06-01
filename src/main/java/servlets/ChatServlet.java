@@ -72,9 +72,63 @@ public class ChatServlet extends HttpServlet {
             te.render("chat.ftl", data, out);
         }
     }
-//todo: implement doPost
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
+        String content = req.getParameter("content");
+
+        if (content == null || content.isEmpty()) {
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Message is required");
+        }
+
+
+        String pathInfo = req.getPathInfo();
+        if (pathInfo == null || pathInfo.equals("/")) {
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing user ID");
+        }
+
+        String[] pathParts = pathInfo.split("/");
+        if (pathParts.length < 2) {
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid user ID");
+        }
+
+        String userIdStr = pathParts[1];
+        int userId;
+        try {
+            userId = Integer.parseInt(userIdStr);
+        } catch (NumberFormatException e) {
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid user ID format");
+            return;
+        }
+
+        User chatOwner; // todo = getLoggedInUser();
+        try {
+            chatOwner = userService.selectById(1);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        if (chatOwner == null) {
+            resp.sendError(HttpServletResponse.SC_UNAUTHORIZED, "User not logged in");
+            return;
+        }
+
+        User receiver;
+        try {
+            receiver = userService.selectById(userId);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        Message message = new Message(chatOwner, receiver, content, new java.util.Date());
+
+        try {
+            messageController.addMessage(message);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        resp.sendRedirect(req.getContextPath() + req.getServletPath() + "/" + userId);
     }
+
 }

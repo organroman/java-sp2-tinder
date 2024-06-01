@@ -78,19 +78,28 @@
                     </ul>
 
                 </div>
-                <div class="col-md-12 p-2 msg-box border border-primary">
-                    <div class="row">
-                        <div class="col-md-2 options-left">
-                            <i class="fa fa-smile-o"></i>
-                        </div>
-                        <div class="col-md-7 pl-0">
-                            <input type="text" class="border-0" placeholder=" Send message" />
-                        </div>
-                        <div class="col-md-3 text-right options-right">
-                            <i class="fa fa-picture-o mr-2"></i>
-                        </div>
-                    </div>
-                </div>
+            <div class="col-md-12 p-2 msg-box border border-primary">
+<!--            <div class="form-wrapper">-->
+                <form class="chat-form" method="post">
+                    <input class='chat-input' type="text" name="content" placeholder="Send message">
+                    <button class="chat-button" type="submit">Send</button>
+                </form>
+                
+<!--            </div>-->
+            </div>
+<!--                <div class="col-md-12 p-2 msg-box border border-primary">-->
+<!--                    <div class="row">-->
+<!--                        <div class="col-md-2 options-left">-->
+<!--                            <i class="fa fa-smile-o"></i>-->
+<!--                        </div>-->
+<!--                        <div class="col-md-7 pl-0">-->
+<!--                            <input type="text" class="border-0" placeholder=" Send message" />-->
+<!--                        </div>-->
+<!--                        <div class="col-md-3 text-right options-right">-->
+<!--                            <i class="fa fa-picture-o mr-2"></i>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
             </div>
 
         </div>

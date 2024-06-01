@@ -296,7 +296,7 @@ input:focus{
 }
 
 .chat-content {
-height: 600px;
+max-height: 600px;
 overflow: auto;
 }
 .chats{
@@ -372,4 +372,22 @@ overflow: auto;
 .msg-box input:focus{
   outline: none;
 }
+.chat-input {
+outline: none;
+border: none;
+width: 100%
+}
+.chat-form {
+width: 100%;
+display: flex;
+}
+.chat-button {
+    border: none;
+    padding: 4px 12px;
+    font-size: 14px;
+    color: white;
+    background-color: #007bff;
+    border-radius: 4px;
+    cursor: pointer;
+  }
 
