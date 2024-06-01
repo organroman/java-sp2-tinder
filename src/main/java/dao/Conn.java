@@ -12,7 +12,7 @@ public class Conn {
                 "jdbc:postgresql://localhost:5435/fs8_step_team1",
                 "fs8_team1",
                 "fs8_team123"
-//                "postgres"     // to do for remote db
+//                "postgres"     // todo for remote db
         );
     }
 }

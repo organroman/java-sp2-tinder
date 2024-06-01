@@ -38,3 +38,14 @@ create table messages
     content text,
     date timestamp
 );
+
+insert into messages (chat_owner_id, receiver_id, content, date)
+values (1, 2, 'hi', current_timestamp);
+insert into messages (chat_owner_id, receiver_id, content, date)
+values (1, 2, 'how are you?', current_timestamp);
+insert into messages (chat_owner_id, receiver_id, content, date)
+values (2, 1, 'hello', current_timestamp);
+insert into messages (chat_owner_id, receiver_id, content, date)
+values (2, 1, 'i am fine', current_timestamp);
+insert into messages (chat_owner_id, receiver_id, content, date)
+values (2, 1, 'and u?', current_timestamp);
