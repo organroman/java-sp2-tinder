@@ -1,12 +1,12 @@
 package servlets;
 
 
-import dao.UserService;
+import service.UserService;
 import models.Like;
 import models.User;
+import service.AuthService;
 import service.LikeService;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,6 +15,7 @@ import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Optional;
 
 public class UserServlet extends HttpServlet {
     private final TemplateEngine te;
@@ -24,7 +25,7 @@ public class UserServlet extends HttpServlet {
     }
 
     int i = 0;
-    ArrayList<User> items2 = new ArrayList<>();
+    ArrayList<User> items2;
 
     {
         try {
@@ -35,15 +36,16 @@ public class UserServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws  IOException {
         HashMap<String, Object> map = getItems2();
         try (PrintWriter out = resp.getWriter()) {
             te.render("like-page.html", map, out);
         }
     }
 
+
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws  IOException {
         if (null != req.getParameter("x")) {
             try (PrintWriter out = resp.getWriter()) {
                 if (null != req.getParameter("like")) {
@@ -55,12 +57,7 @@ public class UserServlet extends HttpServlet {
                 } else resp.setStatus(HttpServletResponse.SC_PRECONDITION_FAILED);
                 if (i != items2.size() - 1) i++;
                 else {
-                    i = 0;          // reset loop
-                    try {
-                        System.out.println(new LikeService().selectByLike(1));     // add parse user id
-                    } catch (SQLException e) {
-                        throw new RuntimeException(e);
-                    }
+                    i = 0;                                   // reset loop
                     resp.sendRedirect("/liked");
                 }
                 HashMap<String, Object> map = getItems2();
@@ -80,9 +77,10 @@ public class UserServlet extends HttpServlet {
 
     public void collect(HttpServletRequest req) throws SQLException {
         LikeService likeService = new LikeService();
-        int who_id = 1;
+        Optional<Integer> who_parse = AuthService.getUserIdByUUID(Auth.getCookieValueUnsafe(req));
+        int who_id = who_parse.get();
         int whom_id = Integer.parseInt(req.getParameter("x"));
-        if (whom_id != who_id) {              // impossible likes yourself
+        if (whom_id != who_id) {                                  // impossible likes yourself
             int flag = likeService.selectIdByUsers(who_id, whom_id);
             if (req.getParameter("like").equals("like")) {
                 likeService.update(new Like(flag, who_id, whom_id, "like"));

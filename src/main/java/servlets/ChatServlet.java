@@ -1,7 +1,7 @@
 package servlets;
 
 import controller.MessageController;
-import dao.UserService;
+import service.UserService;
 import models.Message;
 import models.User;
 

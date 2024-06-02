@@ -18,7 +18,6 @@ public class UsersDAO implements Dao<User> {
     private final static String UPDATE = "UPDATE users set name=?,logo=? WHERE user_id=?;";
     private final static String DELETE = "DELETE FROM users WHERE user_id=?;";
 
-    private final static String GET_LOGIN = "SELECT user_id, FROM users where ((name=?)and(password=?));";
 
     @Override
     public void update(User user) throws SQLException {
@@ -82,7 +81,7 @@ public class UsersDAO implements Dao<User> {
                 }
             }
         }
-        return users.getFirst() == null ? new User("Bab request", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTR-KgOIasuWW4-30_fqyd0zYyj9al8jK-sug&s") : users.getFirst();
+        return users.getFirst() == null ? new User("Bab request no such User", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTR-KgOIasuWW4-30_fqyd0zYyj9al8jK-sug&s") : users.getFirst();
     }
 
 }

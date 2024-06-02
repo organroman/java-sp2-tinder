@@ -2,6 +2,7 @@ package dao;
 
 import models.Like;
 import models.User;
+import service.UserService;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,7 +15,7 @@ public class LikesDAO implements Dao<Like> {
 
     private final static String INSERT = "INSERT INTO likes (who,whom,action)VALUES (?,?,?);";
     private final static String GET_ALL = "SELECT id,who,whom,action FROM likes;";
-    private final static String GET_BY_USER_ID_lIKED = "SELECT whom FROM likes where ((who=?)and(action=?));";
+    private final static String GET_BY_USER_ID_LIKED = "SELECT whom FROM likes where ((who=?)and(action=?));";
     private final static String GET_ID = "SELECT id FROM likes WHERE ((who=?)and(whom=?));";
     private final static String UPDATE = "UPDATE likes set who=?,whom=?,action=? WHERE id=?;";
     private final static String DELETE = "DELETE FROM likes WHERE id=?;";
@@ -73,9 +74,9 @@ public class LikesDAO implements Dao<Like> {
     }
 
     public ArrayList<User> selectByLike(int i) throws SQLException {
-        ArrayList<User> users = new ArrayList<User>();
+        ArrayList<User> users = new ArrayList<>();
         try (Connection connector = Conn.mcConn()) {
-            PreparedStatement preparedStatement = connector.prepareStatement(GET_BY_USER_ID_lIKED);
+            PreparedStatement preparedStatement = connector.prepareStatement(GET_BY_USER_ID_LIKED);
             preparedStatement.setInt(1, i);
             preparedStatement.setString(2, "like");
             try (ResultSet resultSet = preparedStatement.executeQuery()) {

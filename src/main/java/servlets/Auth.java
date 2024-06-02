@@ -1,11 +1,8 @@
 package servlets;
 
-import dao.Dao;
-import dao.UserService;
-import dao.UsersDAO;
+import service.UserService;
 import models.User;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
