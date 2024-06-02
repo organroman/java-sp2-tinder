@@ -1,6 +1,7 @@
 services:
   - type: web
     name: java-sp2-tinder
-    env: java
-    buildCommand: JAVA_HOME=/opt/render/project/.java/current ./mvnw clean install
-    startCommand: java -jar target/tinder-1.0-SNAPSHOT.jar
+    env: docker
+    dockerfilePath: ./Dockerfile
+    buildCommand: ""
+    startCommand: ""
