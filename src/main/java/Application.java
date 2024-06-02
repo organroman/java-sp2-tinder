@@ -5,7 +5,6 @@ import org.eclipse.jetty.servlet.ServletHolder;
 import servlets.*;
 
 import javax.servlet.DispatcherType;
-import javax.servlet.http.HttpServlet;
 import java.util.EnumSet;
 
 public class Application {
