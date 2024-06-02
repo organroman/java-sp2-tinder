@@ -15,7 +15,7 @@ insert into users (name, logo, password) values ('MXP', 'https://stud-point.com/
 insert into users (name, logo, password) values ('Farro', 'https://farro.org.ua/templates/Faro_lang/images/faro-logo.png', '123456');
 insert into users (name, logo, password) values ('GLB', 'https://corp.globino.ua/wp-content/uploads/2020/05/logo.png', '123456');
 insert into users (name, logo, password) values ('John Doe', 'https://robohash.org/johndoe.png', '123456');
-insert into users (name, logo, password) values ('Jane Doe', 'https://robohash.org/janesmith.png', '1233456');
+insert into users (name, logo, password) values ('Jane Doe', 'https://robohash.org/janesmith.png', '1233457');
 
 
 create table likes

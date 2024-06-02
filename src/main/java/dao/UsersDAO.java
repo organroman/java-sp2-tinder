@@ -81,7 +81,7 @@ public class UsersDAO implements Dao<User> {
                 }
             }
         }
-        return users.getFirst() == null ? new User("Bab request", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTR-KgOIasuWW4-30_fqyd0zYyj9al8jK-sug&s") : users.getFirst();
+        return users.getFirst() == null ? new User("Bab request no such User", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTR-KgOIasuWW4-30_fqyd0zYyj9al8jK-sug&s") : users.getFirst();
     }
 
 }
