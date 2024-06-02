@@ -1,6 +1,3 @@
---create
---database user_step_base; todo: delete
-
 
 create table users
 (
