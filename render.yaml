@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: java-sp2-tinder
+    env: java
+    buildCommand: ./mvnw clean install
+    startCommand: java -jar target/tinder-1.0-SNAPSHOT.jar
+    envVars:
+      - key: JAVA_HOME
+        value: /opt/render/project/.java/current
