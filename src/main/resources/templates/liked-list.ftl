@@ -19,12 +19,17 @@
     <div class="row">
         <#list users as user>
             <div class="col-12 col-md-6 col-lg-4 user-card">
-                <div class="card">
-                    <img class="card-img-top user-img" src="${user.imgUrl}" alt="${user.name}">
-                    <div class="card-body">
-                        <h5 class="card-title">${user.name}</h5>
+                <form method="post" action="/liked">
+                    <input type="hidden" name="userId" value="${user.id}">
+                    <div class="card" onclick="this.parentElement.submit()">
+                        <div class="card-img-container">
+                            <img class="card-img-top user-img" src="${user.imgUrl}" alt="${user.name}">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">${user.name}</h5>
+                        </div>
                     </div>
-                </div>
+                </form>
             </div>
         </#list>
     </div>

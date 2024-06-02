@@ -38,7 +38,6 @@ public class Auth {
                 .findFirst();
     }
 
-    // 1
     public static Optional<String> getCookieValue(HttpServletRequest rq) {
         return getCookie(rq).map(Cookie::getValue);
     }
@@ -52,14 +51,12 @@ public class Auth {
         rs.addCookie(cookie);
     }
 
-    // 2
     public static void setCookieValue(HttpServletResponse rs, String cookieValue) {
         Cookie cookie = new Cookie(CookieName, cookieValue);
-        cookie.setMaxAge(10 * 60); // TTL in seconds (10 min)
+        cookie.setMaxAge(60 * 60 * 24 ); // TTL in seconds (1 day)
         setCookie(rs, cookie);
     }
 
-    // 3
     public static void removeCookie(HttpServletResponse rs) {
         Cookie cookie = new Cookie(CookieName, "");
         cookie.setMaxAge(0);

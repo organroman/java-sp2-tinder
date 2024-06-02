@@ -33,30 +33,21 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("doPost method called"); // Отладочное сообщение
-
         String name = req.getParameter("inputName");
         String password = req.getParameter("inputPassword");
-
-        System.out.println("Received name: " + name); // Отладочное сообщение
-        System.out.println("Received password: " + password); // Отладочное сообщение
 
         try {
             Optional<User> userOptional = Auth.getUserByNameAndPassword(name, password);
 
             if (userOptional.isPresent()) {
                 User user = userOptional.get();
-                System.out.println("User found: " + user.getName()); // Отладочное сообщение
 
                 String userUUID = UUID.randomUUID().toString();
                 AuthService.update(userUUID, user);
 
-                System.out.println(AuthService.select().toString());
                 Auth.setCookieValue(resp, userUUID);
                 resp.sendRedirect("/users");
             } else {
-                System.out.println("User not found, redirect to login"); // Отладочное сообщение
-
                 resp.sendRedirect("/login");
             }
         } catch (SQLException e) {
