@@ -45,7 +45,6 @@ public class LoginServlet extends HttpServlet {
                 String userUUID = UUID.randomUUID().toString();
                 AuthService.update(userUUID, user);
 
-                System.out.println(AuthService.select().toString());
                 Auth.setCookieValue(resp, userUUID);
                 resp.sendRedirect("/users");
             } else {
