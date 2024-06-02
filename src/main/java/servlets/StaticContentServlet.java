@@ -42,17 +42,41 @@ public class StaticContentServlet extends HttpServlet {
 //            // 3
 //            Files.copy(path, os);
 //        }
+//        InputStream resourceStream = getClass().getClassLoader().getResourceAsStream(fullName);
+//        if (resourceStream == null) {
+//            resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+//        } else {
+//            try (ServletOutputStream os = resp.getOutputStream()) {
+//                byte[] buffer = new byte[1024];
+//                int bytesRead;
+//                while ((bytesRead = resourceStream.read(buffer)) != -1) {
+//                    os.write(buffer, 0, bytesRead);
+//                }
+//            } finally {
+//                resourceStream.close();
+//            }
+//        }
+//    }
+//}
         InputStream resourceStream = getClass().getClassLoader().getResourceAsStream(fullName);
         if (resourceStream == null) {
             resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
-        } else {
-            try (ServletOutputStream os = resp.getOutputStream()) {
-                byte[] buffer = new byte[1024];
-                int bytesRead;
-                while ((bytesRead = resourceStream.read(buffer)) != -1) {
-                    os.write(buffer, 0, bytesRead);
-                }
-            } finally {
+            return;
+        }
+
+        // Set MIME type
+        if (fileName.endsWith(".css")) {
+            resp.setContentType("text/css");
+        }
+
+        try (ServletOutputStream os = resp.getOutputStream()) {
+            byte[] buffer = new byte[1024];
+            int bytesRead;
+            while ((bytesRead = resourceStream.read(buffer)) != -1) {
+                os.write(buffer, 0, bytesRead);
+            }
+        } finally {
+            if (resourceStream != null) {
                 resourceStream.close();
             }
         }
