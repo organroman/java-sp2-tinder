@@ -42,7 +42,7 @@ public class StaticContentServlet extends HttpServlet {
 //            // 3
 //            Files.copy(path, os);
 //        }
-        InputStream resourceStream = ResourceOps.getResource(fullName).openStream();
+        InputStream resourceStream = getClass().getClassLoader().getResourceAsStream(fullName);
         if (resourceStream == null) {
             resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
         } else {
@@ -57,5 +57,4 @@ public class StaticContentServlet extends HttpServlet {
             }
         }
     }
-
 }
