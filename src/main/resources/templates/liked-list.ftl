@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Liked Users">
     <meta name="author" content="Your Name">
-    <link rel="icon" href="/css/img/favicon.ico">
+    <link rel="icon" href="img/favicon.ico">
 
     <title>Liked Users</title>
     <!-- Bootstrap core CSS -->

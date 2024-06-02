@@ -15,14 +15,14 @@ public class Application {
         TemplateEngine te = new TemplateEngine("templates");
         ServletContextHandler handler = new ServletContextHandler();
 
-        handler.addServlet(new ServletHolder(new HelloServlet()), "/");
+        handler.addServlet(new ServletHolder(new RedirectServlet("/users")), "/");
         handler.addServlet(new ServletHolder(new UserServlet(te)), "/users");
         handler.addServlet(new ServletHolder(new ChatServlet(te)), "/messages/*");
         handler.addServlet(new ServletHolder(new LikedServlet(te)), "/liked");
         handler.addServlet(new ServletHolder(new LoginServlet(te)), "/login");
         handler.addServlet(new ServletHolder(new StaticContentServlet("css")), "/css/*");
+        handler.addServlet(new ServletHolder(new StaticContentServlet("img")), "/img/*");
 
-        handler.addServlet(new ServletHolder(new TestServlet(te)), "/users2"); // to delete
 
         EnumSet<DispatcherType> dt = EnumSet.of(DispatcherType.REQUEST);
 

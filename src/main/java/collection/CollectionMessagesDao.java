@@ -17,7 +17,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 public class CollectionMessagesDao implements MessageDao {
-//    private List<Message> messages; todo: delete
 
     private final static String GET_MESSAGES = """
             select m.chat_owner_id,
@@ -38,10 +37,7 @@ public class CollectionMessagesDao implements MessageDao {
             insert into messages (chat_owner_id, receiver_id, content, date)
             values (?, ?, ?, ?);
             """;
-    //TODO: DELETE COMMENTED CODE
-//    public CollectionMessagesDao(List<Message> messages) {
-//        this.messages = messages;
-//    }
+
     @Override
     public void insert(Message message) throws SQLException {
     try (Connection connector = Conn.mcConn()) {

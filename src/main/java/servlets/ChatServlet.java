@@ -28,20 +28,18 @@ public class ChatServlet extends HttpServlet {
     static MessageController messageController = new MessageController();
     static UserService userService = new UserService();
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        Optional<Integer> isLoggedInUserId = AuthService.getUserIdByUUID(Auth.getCookieValueUnsafe(req));
-        int loggedInUserId = isLoggedInUserId.orElseThrow(() -> new ServletException("User is not logged in"));
-
+    private int getUserIdFromPath (HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String pathInfo = req.getPathInfo();
         if (pathInfo == null || pathInfo.equals("/")) {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing user ID");
+            return -1;
         }
 
         String[] pathParts = pathInfo.split("/");
         if (pathParts.length < 2) {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid user ID");
+            return -1;
         }
 
         String userIdStr = pathParts[1];
@@ -50,8 +48,21 @@ public class ChatServlet extends HttpServlet {
             userId = Integer.parseInt(userIdStr);
         } catch (NumberFormatException e) {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid user ID format");
-            return;
+            return -1;
         }
+
+        return userId;
+
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        Optional<Integer> isLoggedInUserId = AuthService.getUserIdByUUID(Auth.getCookieValueUnsafe(req));
+        int loggedInUserId = isLoggedInUserId.orElseThrow(() -> new ServletException("User is not logged in"));
+
+        int userId = getUserIdFromPath(req, resp);
+        if (userId == -1) return;
 
         List<Message> messages;
 
@@ -87,27 +98,8 @@ public class ChatServlet extends HttpServlet {
             return;
         }
 
-
-        String pathInfo = req.getPathInfo();
-        if (pathInfo == null || pathInfo.equals("/")) {
-            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing user ID");
-            return;
-        }
-
-        String[] pathParts = pathInfo.split("/");
-        if (pathParts.length < 2) {
-            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid user ID");
-            return;
-        }
-
-        String userIdStr = pathParts[1];
-        int userId;
-        try {
-            userId = Integer.parseInt(userIdStr);
-        } catch (NumberFormatException e) {
-            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid user ID format");
-            return;
-        }
+        int userId = getUserIdFromPath(req, resp);
+        if (userId == -1) return;
 
         Optional<User> isChatOwner = AuthService.getUserByUUID(Auth.getCookieValueUnsafe(req));
         User loggedInUser = isChatOwner.orElseThrow(() -> new ServletException("User is not logged in"));

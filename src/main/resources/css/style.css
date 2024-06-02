@@ -381,6 +381,15 @@ width: 100%
 width: 100%;
 display: flex;
 }
+.no-messages-li {
+width: 100%
+}
+
+.no-messages {
+    border: 1px solid gray;
+    border-radius: 8px;
+    background-color: azure;
+}
 .chat-button {
     border: none;
     padding: 4px 12px;
